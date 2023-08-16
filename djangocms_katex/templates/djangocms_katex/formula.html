@@ -1,0 +1,35 @@
+{% load sekizai_tags %}
+{% spaceless %}
+    <{{ tag_type }}{{ instance.get_attributes }} id="katex-{{ instance.id|safe }}"
+     data-formula="{{ instance.katex }}" data-options='{{ instance.options }}'>{{ instance.katex }}
+    </{{ tag_type }}>
+{% endspaceless %}
+{% addtoblock "css" %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">{% endaddtoblock %}
+{% addtoblock "js" %}
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" integrity="sha384-cpW21h6RZv/phavutF+AuVYrr+dA8xD9zs6FwLpaCct6O9ctzYFfFr4dgmgccOTx" crossorigin="anonymous"></script>
+  <script>
+      window.djangocms_katex_fields = window.djangocms_katex_fields || [];
+      (function () {
+        function render()
+        {
+          console.log("Render called")
+          for (const elementId of window.djangocms_katex_fields) {
+              const element = document.getElementById(elementId);
+              let options = JSON.parse(element.dataset.options);
+              console.log(String(element.dataset.formula), options);
+              katex.render(element.dataset.formula, element, options);
+          };
+        };
+        document.addEventListener("DOMContentLoaded", render);
+        {% if request.toolbar %}
+            CMS.$(window).on('cms-content-refresh', render);
+        {% endif %}
+        document.addEventListener("cms-content-refresh", render);
+      })();
+  </script>
+{% endaddtoblock %}
+{% addtoblock "js" %}
+  <script>
+    djangocms_katex_fields.push("katex-{{ instance.id|safe }}");
+  </script>
+{% endaddtoblock %}
