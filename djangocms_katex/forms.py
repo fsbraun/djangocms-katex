@@ -4,6 +4,7 @@ from django.forms import ModelForm
 
 from . import models
 
+
 class KaTexInput(forms.Textarea):
     def __init__(self, *args, **kwargs):
         self.textarea_template = self.template_name

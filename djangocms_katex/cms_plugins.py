@@ -7,7 +7,6 @@ from django.utils.translation import gettext_lazy as _
 from . import forms, models
 
 
-
 @plugin_pool.register_plugin
 class KaTexPlugin(CMSPluginBase):
     """
