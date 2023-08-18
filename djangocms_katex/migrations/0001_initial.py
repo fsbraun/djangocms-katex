@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('cmsplugin_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, related_name='%(app_label)s_%(class)s', serialize=False, to='cms.cmsplugin')),
                 ('katex', models.TextField(verbose_name='Formula')),
-                ('katex_display_style', models.BooleanField(choices=[(False, 'Inline style'), (True, 'Display style')], help_text='Switch between inline and display style', verbose_name='Style')),
+                ('katex_display_style', models.BooleanField(choices=[(False, 'Inline style'), (True, 'Display style')], help_text='Switch between inline and display style', verbose_name='Style', default=True, null=False)),
                 ('attributes', djangocms_attributes_field.fields.AttributesField(default=dict)),
             ],
             options={

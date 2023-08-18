@@ -20,7 +20,7 @@ class KaTexPlugin(CMSPluginBase):
 
     fieldsets = [
         (
-            _("KaTex Formula"),
+            name,
             {
                 "fields": [
                     "katex",
