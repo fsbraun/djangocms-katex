@@ -1,4 +1,4 @@
-setTimeout (function () {
+document.addEventListener("DOMContentLoaded", function () {
     'use strict';
 
     const display_style = document.getElementById('id_katex_display_style');
@@ -58,4 +58,4 @@ setTimeout (function () {
     editor.focus();
     display_style.addEventListener('change', update_formula);
     update_formula();
- }, 100);
+ });
