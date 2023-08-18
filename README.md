@@ -29,3 +29,6 @@ requirements or with pip. Make the static files for the ace code editor availabl
 to your project by adding `djangocms_static_ace` to your project's
 ``INSTALLED_APPS``.
 
+djangocms-text-ckeditor's inline functionality might interfere with KaTeX's layout.
+To ensure a great editing expierience deactivate it if you use djangocms-katex by
+removing `TEXT_INLINE_EDITING = True` from your `settings.py` file.
