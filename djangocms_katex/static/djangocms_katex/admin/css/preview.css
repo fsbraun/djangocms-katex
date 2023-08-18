@@ -1,0 +1,26 @@
+.katex-preview {
+    width: 100%;
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+    background: var(--dca-gray-lightest, var(--darkened-bg, #f2f2f2));
+    border: solid 1px var(--dca-gray-lighter, var(--border-color, #ddd));
+    border-radius: 3px;
+    min-height: 4em;
+}
+
+div#preview_area_id > span, div#preview_area_id > div {
+    margin: 0 15px;
+}
+
+.katex-preview small {
+    color: var(--dca-gray, var(--body-quiet-color, #666));
+    margin-bottom: 1em;
+}
+
+small.error {
+    color: var(--error-fg);
+}
+
+#content > h2 {
+    display: none;
+}

@@ -1,0 +1,9 @@
+{% load i18n %}
+<div class="katex-preview">
+    <small>{% translate "Preview" %}</small>
+    <div id="preview_area_id">
+    </div>
+    <small class="error" id="katex-error"></small>
+</div>
+<div id="katex-ace-editor"></div>
+{% include widget.textarea_template %}

@@ -1,23 +1,25 @@
-{% load sekizai_tags %}
+{% load sekizai_tags static %}
 {% spaceless %}
-    <{{ tag_type }}{{ instance.get_attributes }} id="katex-{{ instance.id|safe }}"
-     data-formula="{{ instance.katex }}" data-options='{{ instance.options }}'>{{ instance.katex }}
+    <{{ tag_type }} data-katex-rendered="false" data-options='{{ instance.options }}'>{{ instance.katex }}
     </{{ tag_type }}>
 {% endspaceless %}
-{% addtoblock "css" %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">{% endaddtoblock %}
+{% addtoblock "css" %}<link rel="stylesheet" href="{% static "djangocms_katex/vendor/katex/katex.min.css" %}">{% endaddtoblock %}
+{% addtoblock "js" %}<script defer src="{% static "djangocms_katex/vendor/katex/katex.min.js" %}"></script>{% endaddtoblock %}
 {% addtoblock "js" %}
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" integrity="sha384-cpW21h6RZv/phavutF+AuVYrr+dA8xD9zs6FwLpaCct6O9ctzYFfFr4dgmgccOTx" crossorigin="anonymous"></script>
   <script>
-      window.djangocms_katex_fields = window.djangocms_katex_fields || [];
+      window.djangocms_katex_macros = window.djangocms_katex_macros || {};
       (function () {
         function render()
         {
-          console.log("Render called")
-          for (const elementId of window.djangocms_katex_fields) {
-              const element = document.getElementById(elementId);
+          for (const element of document.querySelectorAll('[data-katex-rendered="false"]')) {
               let options = JSON.parse(element.dataset.options);
-              console.log(String(element.dataset.formula), options);
-              katex.render(element.dataset.formula, element, options);
+              options.macros = djangocms_katex_macros;  // Persistent macros on a page
+              try {
+                  katex.render(element.textContent, element, options);
+                  element.dataset.katexRendered = true;
+              } catch (e) {
+                  console.error(e);
+              }
           };
         };
         document.addEventListener("DOMContentLoaded", render);
@@ -26,10 +28,5 @@
         {% endif %}
         document.addEventListener("cms-content-refresh", render);
       })();
-  </script>
-{% endaddtoblock %}
-{% addtoblock "js" %}
-  <script>
-    djangocms_katex_fields.push("katex-{{ instance.id|safe }}");
   </script>
 {% endaddtoblock %}

@@ -1,46 +1,36 @@
 from django import forms
-from django.utils.translation import gettext_lazy as _
-from entangled.forms import EntangledModelForm
+from django.conf import settings
+from django.forms import ModelForm
 
-from djangocms_frontend import settings
-from djangocms_frontend.common.responsive import ResponsiveFormMixin
-from djangocms_frontend.common.spacing import SpacingFormMixin
-from djangocms_frontend.contrib import alert
-from djangocms_frontend.fields import (
-    AttributesFormField,
-    ColoredButtonGroup,
-    TagTypeFormField,
-)
-from djangocms_frontend.helpers import first_choice
-from djangocms_frontend.models import FrontendUIItem
-from djangocms_frontend.settings import COLOR_STYLE_CHOICES
+from . import models
 
-mixin_factory = settings.get_forms(alert)
+class KaTexInput(forms.Textarea):
+    def __init__(self, *args, **kwargs):
+        self.textarea_template = self.template_name
+        self.template_name = "djangocms_katex/admin/katex_widget.html"
+        super().__init__(*args, **kwargs)
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context["widget"]["textarea_template"] = self.textarea_template
+        return context
 
 
-class KaTexForm(
-    mixin_factory("KaTex"), ResponsiveFormMixin, SpacingFormMixin, EntangledModelForm
-):
 
+class KaTexForm(ModelForm):
+    class Media:
+        js = (
+            "djangocms_katex/admin/js/preview.js",
+            "djangocms_katex/vendor/katex/katex.min.js",
+            "admin/vendor/ace/ace.js"
+            if "djangocms_static_ace" in settings.INSTALLED_APPS
+            else "https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.6/ace.js",
+
+        )
+        css = {"all": ("djangocms_katex/admin/css/preview.css", "djangocms_katex/vendor/katex/katex.css")}
     class Meta:
-        model = FrontendUIItem
-        entangled_fields = {
-            "config": [
-                "katex",
-                "katex_display_style",
-                "attributes",
-            ]
+        model = models.KaTex
+        widgets = {
+            "katex": KaTexInput,
         }
-
-    katex = forms.CharField(
-        label=_("Formula"),
-    )
-    katex_display_style = forms.ChoiceField(
-        label=_("Style"),
-        initial=False,
-        choices=((False, _("Inline style")), (True, ("Display style"))),
-        required=False,
-        help_text=_("Switch between inline and display style"),
-    )
-    attributes = AttributesFormField()
-    tag_type = TagTypeFormField()
+        fields = "__all__"

@@ -36,7 +36,7 @@ setup(
     install_requires=[
         "djangocms-frontend"
     ],
-    license='BSD-3',
+    license='MIT',
     platforms=['OS Independent'],
     keywords=['KaTeX', 'django CMS'],
     classifiers=CLASSIFIERS,
