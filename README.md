@@ -8,6 +8,7 @@ of djangocms-text-ckeditor.
 The plugin form has a preview functionality that either shows
 the typed formula. Errors are shown in red.
 
+![Example screenshot](https://github.com/fsbraun/djangocms-katex/blob/main/private/screenshot.jpg?raw=true)
 
 ## Installation
 
