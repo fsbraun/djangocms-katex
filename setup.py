@@ -25,6 +25,12 @@ CLASSIFIERS = [
     'Framework :: Django :: 4.2',
 ]
 
+EXTRA_REQUIREMENTS = {
+    "static-ace": [
+        "djangocms-static-ace",
+    ],
+}
+
 setup(
     name='djangocms-katex',
     version=__version__,
@@ -34,8 +40,9 @@ setup(
     url='https://github.com/fsbraun/djangocms-katex',
     packages=find_packages(exclude=['testapp', 'docs']),
     install_requires=[
-        "djangocms-frontend"
+        "django-cms"
     ],
+    extras_require=EXTRA_REQUIREMENTS,
     license='MIT',
     platforms=['OS Independent'],
     keywords=['KaTeX', 'django CMS'],
