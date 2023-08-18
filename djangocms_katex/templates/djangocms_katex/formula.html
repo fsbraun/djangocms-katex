@@ -23,7 +23,9 @@
           };
         };
         document.addEventListener("DOMContentLoaded", render);
-        document.addEventListener("cms-content-refresh", render);
+        {% if request.toolbar %}
+            CMS.$(window).on('cms-content-refresh', render);
+        {% endif %}
       })();
   </script>
 {% endaddtoblock %}
