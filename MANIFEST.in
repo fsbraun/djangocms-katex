@@ -1,6 +1,6 @@
 include LICENSE
 include README.md
-recursive-include djangocms_katexy/locale *
-recursive-include djangocms_katexy/static *
-recursive-include djangocms_katexy/templates *
+recursive-include djangocms_katex/locale *
+recursive-include djangocms_katex/static *
+recursive-include djangocms_katex/templates *
 recursive-exclude * *.py[co]
