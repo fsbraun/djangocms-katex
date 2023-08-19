@@ -1,4 +1,7 @@
 # djangocms-katex
+
+[![PyPI version](https://badge.fury.io/py/djangocms-katex.svg)](https://badge.fury.io/py/djangocms-katex)
+
 Provides a django CMS plugin to render formulae using KaTeX and 
 its mhchem extension.
 

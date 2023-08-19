@@ -8,7 +8,7 @@ with open('README.md') as fh:
 
 
 CLASSIFIERS = [
-    'Development Status :: 4 - Beta',
+    "Development Status :: 5 - Production/Stable",
     'Environment :: Web Environment',
     'Framework :: Django',
     'Intended Audience :: Developers',
@@ -23,6 +23,12 @@ CLASSIFIERS = [
     'Framework :: Django :: 4.0',
     'Framework :: Django :: 4.1',
     'Framework :: Django :: 4.2',
+    "Framework :: Django CMS :: 3.8",
+    "Framework :: Django CMS :: 3.9",
+    "Framework :: Django CMS :: 3.10",
+    "Framework :: Django CMS :: 3.11",
+    "Framework :: Django CMS :: 4.0",
+    "Framework :: Django CMS :: 4.1",
 ]
 
 EXTRA_REQUIREMENTS = {
