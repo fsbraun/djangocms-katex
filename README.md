@@ -1,5 +1,6 @@
 # djangocms-katex
-Provides a django CMS plugin to render formulae using KaTeX.
+Provides a django CMS plugin to render formulae using KaTeX and 
+its mhchem extension.
 
 The plugin can display formulae either inline or in display mode. 
 It is text-enabled and you can add equations to rich text fields 
