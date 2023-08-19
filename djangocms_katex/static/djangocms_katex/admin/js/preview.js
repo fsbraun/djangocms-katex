@@ -1,3 +1,6 @@
+// static/djangocms_katex/admin/js/preview.js
+//
+
 document.addEventListener("DOMContentLoaded", function () {
     'use strict';
 
