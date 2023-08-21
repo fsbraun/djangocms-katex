@@ -31,7 +31,7 @@ class KaTex(CMSPlugin):
         choices=DISPLAY_STYLES,
         null=False,
         default=1,
-        help_text=_("Switch between inline and display style"),
+        help_text=_("Switch between styles"),
     )
 
     def get_short_description(self):

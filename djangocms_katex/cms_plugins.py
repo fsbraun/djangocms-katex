@@ -25,7 +25,7 @@ class KaTexPlugin(CMSPluginBase):
     def render(self, context, instance, placeholder):
         context["options"] = json.dumps({
             "throwOnError": False,
-            "displayMode": instance.katex_display_style,
+            "displayMode": instance.katex_display_style >= 1,
             "fleqn": instance.katex_display_style == 2,
         })
         context["tag_type"] = "div" if instance.katex_display_style else "span"
