@@ -30,7 +30,7 @@ class KaTex(CMSPlugin):
         verbose_name=_("Style"),
         choices=DISPLAY_STYLES,
         null=False,
-        default=True,
+        default=1,
         help_text=_("Switch between inline and display style"),
     )
 

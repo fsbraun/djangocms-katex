@@ -10,7 +10,7 @@ Provides a django CMS plugin to render formulae using KaTeX and
 its mhchem extension.
 
 The plugin can display formulae either inline or in display mode. 
-It is text-enabled and you can add equations to rich text fields 
+It is text-enabled, and you can add equations to rich text fields 
 of djangocms-text-ckeditor.
 
 The plugin form has a preview functionality that either shows
@@ -40,3 +40,9 @@ to your project by adding `djangocms_static_ace` to your project's
 djangocms-text-ckeditor's inline functionality might interfere with KaTeX's layout.
 To ensure a great editing experience deactivate it if you use djangocms-katex by
 removing `TEXT_INLINE_EDITING = True` from your `settings.py` file.
+
+## Usage note
+
+djangocms-katex only loads required LaTeX JavaScript libraries on demand only. 
+This might lead to formulae initially only show in source code. To see the rendered
+formula in such a case, please reload the page.

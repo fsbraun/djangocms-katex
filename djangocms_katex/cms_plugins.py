@@ -26,6 +26,7 @@ class KaTexPlugin(CMSPluginBase):
         context["options"] = json.dumps({
             "throwOnError": False,
             "displayMode": instance.katex_display_style,
+            "fleqn": instance.katex_display_style == 2,
         })
         context["tag_type"] = "div" if instance.katex_display_style else "span"
         context["chem_eq"] = re.search(r"\\ce\s*{", instance.katex)

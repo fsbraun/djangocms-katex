@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('cmsplugin_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, related_name='%(app_label)s_%(class)s', serialize=False, to='cms.cmsplugin')),
                 ('katex', models.TextField(help_text='Read more about KaTeX formulae in <a href="https://katex.org" target="_blank">its documentation</a>', verbose_name='Formula')),
-                ('katex_display_style', models.SmallIntegerField(choices=[(0, 'Inline style'), (1, 'Display style'), (2, 'Display style flush left')], default=True, help_text='Switch between inline and display style', verbose_name='Style')),
+                ('katex_display_style', models.SmallIntegerField(choices=[(0, 'Inline style'), (1, 'Display style'), (2, 'Display style flush left')], default=1, help_text='Switch between inline and display style', verbose_name='Style')),
             ],
             options={
                 'verbose_name': 'KaTeX Formula',
