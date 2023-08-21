@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
     editor.getSession().setValue(input_field.value);
 
     function update_formula() {
-        const display_type = display_style.value === 'True';
+        const display_type = display_style.value != 0;
         preview_area.innerHTML = (display_type ? '<div></div>' : '<span></span>');
         input_field.value = editor.getSession().getValue();
         try {

@@ -10,6 +10,11 @@ from django.utils.translation import gettext_lazy as _
 
 class KaTex(CMSPlugin):
 
+    DISPLAY_STYLES = (
+        (0, _("Inline style")),
+        (1, _("Display style")),
+        (2, _("Display style flush left")),
+    )
     class Meta:
         verbose_name = _("KaTeX Formula")
 
@@ -21,9 +26,9 @@ class KaTex(CMSPlugin):
             .format(link="https://katex.org")
         )  # A lazy string which will be marked safe
     )
-    katex_display_style = models.BooleanField(
+    katex_display_style = models.SmallIntegerField(
         verbose_name=_("Style"),
-        choices=((False, _("Inline style")), (True, _("Display style"))),
+        choices=DISPLAY_STYLES,
         null=False,
         default=True,
         help_text=_("Switch between inline and display style"),
