@@ -41,7 +41,11 @@ djangocms-text-ckeditor's inline functionality might interfere with KaTeX's layo
 To ensure a great editing experience deactivate it if you use djangocms-katex by
 removing `TEXT_INLINE_EDITING = True` from your `settings.py` file.
 
-## Usage note
+## Usage
+
+Once installed, a new puling ("KaTeX formula") is available and can be entered 
+into any placeholder or within a text plugin.
+
 
 djangocms-katex only loads required LaTeX JavaScript libraries on demand only. 
 This might lead to formulae initially only shown in source code. To see the rendered
