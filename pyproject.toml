@@ -15,6 +15,7 @@ keywords = [
     "KaTeX",
     "django CMS",
 ]
+requires-python = ">=3.9"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Web Environment",
