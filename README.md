@@ -44,5 +44,6 @@ removing `TEXT_INLINE_EDITING = True` from your `settings.py` file.
 ## Usage note
 
 djangocms-katex only loads required LaTeX JavaScript libraries on demand only. 
-This might lead to formulae initially only show in source code. To see the rendered
-formula in such a case, please reload the page.
+This might lead to formulae initially only shown in source code. To see the rendered
+formula in such a case, please reload the page which ensures that all required
+JavaScript is loaded.
