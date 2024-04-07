@@ -1,10 +1,12 @@
 {# templates/djangocms_katex/admin/katex_widget.html #}
 {% load i18n %}
-<div class="katex-preview">
-    <small>{% translate "Preview" %}</small>
-    <div id="preview_area_id">
+<div class="katex-widget">
+    <div class="katex-preview">
+        <small>{% translate "Preview" %}</small>
+        <div id="preview_area_id">
+        </div>
+        <small class="error" id="katex-error"></small>
     </div>
-    <small class="error" id="katex-error"></small>
+    <div id="katex-ace-editor"></div>
+    {% include widget.textarea_template %}
 </div>
-<div id="katex-ace-editor"></div>
-{% include widget.textarea_template %}

@@ -1,4 +1,7 @@
 /* static/djangocms_katex/admin/css/preview.css */
+.katex-widget {
+    width: 100%;
+}
 
 .katex-preview {
     width: 100%;
