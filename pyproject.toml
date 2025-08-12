@@ -79,17 +79,18 @@ exclude = [
   ".env",
   ".venv",
 ]
-lint.ignore = [
-  "E501", # line too long
-  "F403", # 'from module import *' used; unable to detect undefined names
-  "E701", # multiple statements on one line (colon)
-  "F401", # module imported but unused
-]
 lint.select = [
-  "I",
   "E",
   "F",
+  "I",
   "W",
+]
+
+lint.ignore = [
+  "E501", # line too long
+  "E701", # multiple statements on one line (colon)
+  "F401", # module imported but unused
+  "F403", # 'from module import *' used; unable to detect undefined names
 ]
 
 [tool.djlint]

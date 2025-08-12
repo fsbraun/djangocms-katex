@@ -31,6 +31,7 @@ class KaTexPlugin(CMSPluginBase):
         icon_alt(instance): Returns a string representation of the formula for use as an alternative icon.
         render(context, instance, placeholder): Prepares the rendering context with KaTeX options and formula data.
     """
+
     name = _("KaTeX Formula")
     model = models.KaTex
     form = forms.KaTexForm
