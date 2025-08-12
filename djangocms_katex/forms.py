@@ -9,6 +9,17 @@ from . import models
 
 
 class KaTexInput(forms.Textarea):
+    class Media:
+        js = (
+            "djangocms_katex/admin/js/preview.js",
+            "djangocms_katex/vendor/katex/katex.min.js",
+            "djangocms_katex/vendor/katex/contrib/mhchem.min.js",
+            "admin/vendor/ace/ace.js"
+            if "djangocms_static_ace" in settings.INSTALLED_APPS
+            else "https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.6/ace.js",
+        )
+        css = {"all": ("djangocms_katex/admin/css/preview.css", "djangocms_katex/vendor/katex/katex.css")}
+
     def __init__(self, *args, **kwargs):
         self.textarea_template = self.template_name
         self.template_name = "djangocms_katex/admin/katex_widget.html"
@@ -20,20 +31,7 @@ class KaTexInput(forms.Textarea):
         return context
 
 
-
 class KaTexForm(ModelForm):
-    class Media:
-        js = (
-            "djangocms_katex/admin/js/preview.js",
-            "djangocms_katex/vendor/katex/katex.min.js",
-            "djangocms_katex/vendor/katex/contrib/mhchem.min.js",
-            "admin/vendor/ace/ace.js"
-            if "djangocms_static_ace" in settings.INSTALLED_APPS
-            else "https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.6/ace.js",
-
-        )
-        css = {"all": ("djangocms_katex/admin/css/preview.css", "djangocms_katex/vendor/katex/katex.css")}
-
     class Meta:
         model = models.KaTex
         widgets = {

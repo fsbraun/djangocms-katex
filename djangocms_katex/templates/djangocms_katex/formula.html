@@ -1,10 +1,5 @@
 {# templates/djangocms_katex/formula.html #}
-
-{% load sekizai_tags static %}
-{% spaceless %}
-    <{{ tag_type }} data-katex-rendered="false" data-options='{{ options }}'>{{ instance.katex }}
-    </{{ tag_type }}>
-{% endspaceless %}
+{% load sekizai_tags static %}<{{ tag_type }} data-katex-rendered="false" data-options='{{ options }}'>{{ instance.katex }}</{{ tag_type }}>
 {% addtoblock "css" %}<link rel="stylesheet" href="{% static "djangocms_katex/vendor/katex/katex.min.css" %}">{% endaddtoblock %}
 {% addtoblock "js" %}<script defer src="{% static "djangocms_katex/vendor/katex/katex.min.js" %}"></script>{% endaddtoblock %}
 {% if chem_eq %}
