@@ -1,3 +1,8 @@
+1.0.0 (2025-08-12)
+==================
+
+* Release 1.0: Stable now!!
+
 0.5.3 (2024-04-07)
 ==================
 
@@ -13,9 +18,9 @@
 * Add fleqn display style
 * Add mdchem support
 
-Note 
+Note
 =====
 Version 0.5.0 is incompatible with previous versions. Delete djangocms-katex's
-table and remove its entries from `django_migrations`, and run 
-`python ./manage.py migrate` again if you have installed an older 
+table and remove its entries from `django_migrations`, and run
+`python ./manage.py migrate` again if you have installed an older
 version.

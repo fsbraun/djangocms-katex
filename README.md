@@ -4,7 +4,6 @@
 [![Python version](https://img.shields.io/pypi/pyversions/djangocms-katex.svg?style=flat-square)](https://pypi.org/project/djangocms-katex/)
 [![Django version](https://img.shields.io/pypi/frameworkversions/django/djangocms-katex.svg?style=flat-square)](https://www.djangoproject.com/)
 [![django CMS version](https://img.shields.io/pypi/frameworkversions/django-cms/djangocms-katex.svg?style=flat-square)](https://www.django-cms.org/)
-[![django CMS 4](https://img.shields.io/badge/django%20CMS-4-blue.svg)](https://www.django-cms.org/en/preview-django-cms-40/)
 
 Provides a django CMS plugin to render formulae using KaTeX and
 its mhchem extension.
