@@ -9,12 +9,12 @@ from django.utils.translation import gettext_lazy as _
 
 
 class KaTex(CMSPlugin):
-
     DISPLAY_STYLES = (
         (0, _("Inline style")),
         (1, _("Display style")),
         (2, _("Display style flush left")),
     )
+
     class Meta:
         verbose_name = _("KaTeX Formula")
 
@@ -22,9 +22,10 @@ class KaTex(CMSPlugin):
         verbose_name=_("Formula"),
         blank=False,
         help_text=lazy(mark_safe, str)(
-            _('Read more about KaTeX formulae in <a href="{link}" target="_blank">its documentation</a>')
-            .format(link="https://katex.org")
-        )  # A lazy string which will be marked safe
+            _('Read more about KaTeX formulae in <a href="{link}" target="_blank">its documentation</a>').format(
+                link="https://katex.org"
+            )
+        ),  # A lazy string which will be marked safe
     )
     katex_display_style = models.SmallIntegerField(
         verbose_name=_("Style"),

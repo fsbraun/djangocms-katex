@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
     editor.getSession().addEventListener('change', update_formula);
-    editor.focus();
     display_style.addEventListener('change', update_formula);
     update_formula();
+    /* editor.focus(); */
  });
