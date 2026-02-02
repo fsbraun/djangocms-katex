@@ -50,13 +50,13 @@ optional-dependencies.static-ace = [
 ]
 urls.Homepage = "https://github.com/fsbraun/djangocms-katex"
 
-[tool.hatch.version]
-path = "djangocms_katex/__init__.py"
-
 [tool.hatch.build.targets.sdist]
 include = [
   "/djangocms_katex",
 ]
+
+[tool.hatch.version]
+path = "djangocms_katex/__init__.py"
 
 [tool.black]
 exclude = [
