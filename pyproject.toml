@@ -1,6 +1,5 @@
 [build-system]
 build-backend = "hatchling.build"
-
 requires = [ "hatchling" ]
 
 [project]
@@ -44,19 +43,16 @@ dynamic = [ "version" ]
 dependencies = [
   "django-cms",
 ]
-
 optional-dependencies.static-ace = [
   "djangocms-static-ace",
 ]
 urls.Homepage = "https://github.com/fsbraun/djangocms-katex"
 
-[tool.hatch.build.targets.sdist]
-include = [
+[tool.hatch]
+build.targets.sdist.include = [
   "/djangocms_katex",
 ]
-
-[tool.hatch.version]
-path = "djangocms_katex/__init__.py"
+version.path = "djangocms_katex/__init__.py"
 
 [tool.black]
 exclude = [
@@ -83,7 +79,6 @@ lint.select = [
   "I",
   "W",
 ]
-
 lint.ignore = [
   "E501", # line too long
   "E701", # multiple statements on one line (colon)
