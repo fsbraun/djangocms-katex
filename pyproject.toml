@@ -49,10 +49,10 @@ optional-dependencies.static-ace = [
 urls.Homepage = "https://github.com/fsbraun/djangocms-katex"
 
 [tool.hatch]
+version.path = "djangocms_katex/__init__.py"
 build.targets.sdist.include = [
   "/djangocms_katex",
 ]
-version.path = "djangocms_katex/__init__.py"
 
 [tool.black]
 exclude = [
@@ -65,6 +65,10 @@ exclude = [
   "build",
   "dist",
 ]
+
+[tool.djlint]
+profile = "django"
+ignore = "H023,T003,H006,H031,D018,H021,H025"
 
 [tool.ruff]
 line-length = 119
@@ -85,7 +89,3 @@ lint.ignore = [
   "F401", # module imported but unused
   "F403", # 'from module import *' used; unable to detect undefined names
 ]
-
-[tool.djlint]
-ignore = "H023,T003,H006,H031,D018,H021,H025"
-profile = "django"
