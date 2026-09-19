@@ -42,7 +42,7 @@ removing `TEXT_INLINE_EDITING = True` from your `settings.py` file.
 
 ## Usage
 
-Once installed, a new puling ("KaTeX formula") is available and can be entered
+Once installed, a new plugin ("KaTeX formula") is available and can be entered
 into any placeholder or within a text plugin.
 
 
