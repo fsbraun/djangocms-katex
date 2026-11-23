@@ -99,7 +99,7 @@ lint.ignore = [
   "F403", # 'from module import *' used; unable to detect undefined names
 ]
 
-[tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "tests.settings"
-pythonpath = [ "." ]
-testpaths = [ "tests" ]
+[tool.pytest]
+ini_options.testpaths = [ "tests" ]
+ini_options.pythonpath = [ "." ]
+ini_options.DJANGO_SETTINGS_MODULE = "tests.settings"

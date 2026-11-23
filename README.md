@@ -20,8 +20,8 @@ The plugin form has a live preview of the typed formula. Errors are shown in red
 
 * Run `pip install djangocms-katex`
 * Add the following entry to your `INSTALLED_APPS`:
-  ```python
-      "djangocms_katex",
+  ```
+  "djangocms_katex",
   ```
 * Run `python manage.py migrate`
 
