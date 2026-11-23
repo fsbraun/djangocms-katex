@@ -14,6 +14,7 @@
 * fix: No inline scripts anymore: Compatible with a strict content security policy
 * chore: Ace editor loaded from CDN updated to 1.45.2
 * chore: Added tests for Django 4.2 - 6.1 and django CMS 3.11 - 5.1
+* chore: Dropped support for Python 3.9
 
 1.0.2 (2026-03-20)
 ==================
