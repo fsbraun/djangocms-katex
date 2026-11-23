@@ -23,9 +23,13 @@ classifiers = [
   "Framework :: Django :: 5.0",
   "Framework :: Django :: 5.1",
   "Framework :: Django :: 5.2",
+  "Framework :: Django :: 6.0",
+  "Framework :: Django :: 6.1",
   "Framework :: Django CMS :: 3.11",
   "Framework :: Django CMS :: 4.0",
   "Framework :: Django CMS :: 4.1",
+  "Framework :: Django CMS :: 5.0",
+  "Framework :: Django CMS :: 5.1",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
@@ -46,6 +50,10 @@ dependencies = [
 ]
 optional-dependencies.static-ace = [
   "djangocms-static-ace",
+]
+optional-dependencies.test = [
+  "pytest",
+  "pytest-django",
 ]
 urls.Homepage = "https://github.com/fsbraun/djangocms-katex"
 
@@ -90,3 +98,8 @@ lint.ignore = [
   "F401", # module imported but unused
   "F403", # 'from module import *' used; unable to detect undefined names
 ]
+
+[tool.pytest]
+ini_options.testpaths = [ "tests" ]
+ini_options.pythonpath = [ "." ]
+ini_options.DJANGO_SETTINGS_MODULE = "tests.settings"

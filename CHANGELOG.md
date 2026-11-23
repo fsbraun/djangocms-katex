@@ -1,3 +1,20 @@
+1.1.0 (2026-11-23)
+==================
+
+* feat: Update KaTeX to 0.19.1. Note: Since KaTeX 0.18 its internal css classes are
+  prefixed (e.g., `katex-base` instead of `base`). If your project styles KaTeX's
+  internal classes, update your selectors.
+* feat: Site-wide KaTeX options and macros with the new `DJANGOCMS_KATEX_OPTIONS` and
+  `DJANGOCMS_KATEX_MACROS` settings. They also apply to the preview in the plugin form.
+* feat: Formulae do not flash their LaTeX source before being rendered anymore
+* feat: Wide formulae in display style scroll horizontally instead of overflowing the page
+* feat: `\pu{}` loads the mhchem extension, too
+* fix: Formulae added in edit mode render without a page reload: KaTeX and mhchem are
+  loaded on demand
+* fix: No inline scripts anymore: Compatible with a strict content security policy
+* chore: Ace editor loaded from CDN updated to 1.45.2
+* chore: Added tests for Django 4.2 - 6.1 and django CMS 3.11 - 5.1
+
 1.0.2 (2026-03-20)
 ==================
 

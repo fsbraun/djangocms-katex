@@ -10,6 +10,23 @@ document.addEventListener("DOMContentLoaded", function () {
     const error_field = document.getElementById('katex-error');
     const ace_field = document.getElementById('katex-ace-editor');
 
+    // Site-wide KaTeX options and macros (DJANGOCMS_KATEX_OPTIONS, DJANGOCMS_KATEX_MACROS)
+    let config = {};
+    try {
+        config = JSON.parse(document.querySelector('.katex-widget').dataset.config || '{}');
+    } catch (e) {
+        console.error(e);
+    }
+
+    function katex_options(throwOnError, displayMode, fleqn) {
+        return Object.assign({}, config.options, {
+            throwOnError: throwOnError,
+            displayMode: displayMode,
+            fleqn: fleqn,
+            macros: Object.assign({}, config.macros)  // Fresh copy: \gdef must not leak between previews
+        });
+    }
+
     // Prepare ace field and hide textarea
     ace_field.style.height = window.getComputedStyle(input_field).height;
     ace_field.style.width = "100%";
@@ -40,18 +57,10 @@ document.addEventListener("DOMContentLoaded", function () {
         preview_area.innerHTML = (display_type ? '<div></div>' : '<span></span>');
         input_field.value = editor.getSession().getValue();
         try {
-            katex.render(input_field.value, preview_area.children[0], {
-                throwOnError: true,
-                displayMode: display_type,
-                fleqn: fleqn
-            });
+            katex.render(input_field.value, preview_area.children[0], katex_options(true, display_type, fleqn));
             error_field.textContent = '';
         } catch(e) {
-           katex.render(input_field.value, preview_area.children[0], {
-                throwOnError: false,
-                displayMode: display_type,
-                fleqn: fleqn
-            });
+            katex.render(input_field.value, preview_area.children[0], katex_options(false, display_type, fleqn));
             let message = String(e);
             if (message.startsWith('ParseError: ')) {
                 message = message.slice('ParseError: '.length);

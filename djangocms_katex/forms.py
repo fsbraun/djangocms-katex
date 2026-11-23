@@ -1,11 +1,13 @@
 # forms.py
 #
 
+import json
+
 from django import forms
 from django.conf import settings
 from django.forms import ModelForm
 
-from . import models
+from . import conf, models
 
 
 class KaTexInput(forms.Textarea):
@@ -16,7 +18,7 @@ class KaTexInput(forms.Textarea):
             "djangocms_katex/vendor/katex/contrib/mhchem.min.js",
             "admin/vendor/ace/ace.js"
             if "djangocms_static_ace" in settings.INSTALLED_APPS
-            else "https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.6/ace.js",
+            else "https://cdnjs.cloudflare.com/ajax/libs/ace/1.45.2/ace.js",
         )
         css = {"all": ("djangocms_katex/admin/css/preview.css", "djangocms_katex/vendor/katex/katex.css")}
 
@@ -28,6 +30,10 @@ class KaTexInput(forms.Textarea):
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
         context["widget"]["textarea_template"] = self.textarea_template
+        # Site-wide options and macros, so that the preview matches the rendered page
+        context["widget"]["katex_config"] = json.dumps(
+            {"options": conf.get_katex_options(), "macros": conf.get_katex_macros()}
+        )
         return context
 
 

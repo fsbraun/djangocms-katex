@@ -1,0 +1,20 @@
+/* static/djangocms_katex/css/formula.css */
+
+/* Do not flash the formula's LaTeX source before it is rendered. If rendering does
+   not happen (e.g., JavaScript is not available), show the source after a delay. */
+[data-katex-rendered="false"] {
+    visibility: hidden;
+    animation: djangocms-katex-reveal 0s 3s forwards;
+}
+
+@keyframes djangocms-katex-reveal {
+    to {
+        visibility: visible;
+    }
+}
+
+/* Wide formulae in display style scroll instead of overflowing the page on small screens */
+div[data-katex-rendered] > .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
