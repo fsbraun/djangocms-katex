@@ -9,6 +9,12 @@ jobs:
   build-n-publish:
     name: Build and publish Python 🐍 distributions 📦 to pypi
     runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/djangocms-katex
+    permissions:
+      contents: read
+      id-token: write  # Trusted publishing (OIDC)
     steps:
     - uses: actions/checkout@v7
     - name: Set up Python 3.10
@@ -34,6 +40,3 @@ jobs:
     - name: Publish distribution 📦 to PyPI
       if: startsWith(github.ref, 'refs/tags')
       uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}

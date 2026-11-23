@@ -76,9 +76,55 @@ on the same page.
 Formulae in display style which are wider than their container can be scrolled
 horizontally, e.g., on small screens.
 
+## Formulae in Markdown
+
+If [djangocms-markdown](https://github.com/fsbraun/djangocms-markdown) (version 1.1 or
+later) is installed, you can write formulae directly in Markdown content. No
+configuration is needed with django CMS 4.1 or later.
+
+```markdown
+Let $a^2 + b^2 = c^2$ be the sides of a triangle, then
+
+$$
+\cos\gamma = \frac{a^2 + b^2 - c^2}{2ab}
+$$
+```
+
+* **Inline formulae** are enclosed in single dollar signs: `$x^2$`. The opening `$`
+  must not be followed by white space. The closing `$` must not be preceded by white
+  space nor be followed by a digit. Hence, "from $5 to $10" is not a formula.
+* **Display formulae** start with `$$` at the beginning of a line and end with `$$` at
+  the end of a line. They can span several lines but cannot contain blank lines.
+* Use `\$` for a dollar sign if a text is mistaken for a formula.
+* Formulae in code spans and code blocks are left untouched.
+* Chemical equations, site-wide options and macros work as in the KaTeX plugin.
+* The preview of the Markdown editor renders the formulae.
+
+Markdown plugins store their rendered content when they are saved. Formulae in existing
+Markdown plugins hence only appear after the plugins have been saved again.
+
+The Markdown plugin adds the required stylesheets and scripts to the page. If you render
+a `MarkdownField` in your own templates, use djangocms-markdown's `{% markdown_assets %}`
+template tag.
+
+To switch the integration off, set `DJANGOCMS_KATEX_MARKDOWN = False`.
+
+With django CMS 3.11, or with Python-Markdown outside of djangocms-markdown, add the
+extension yourself, e.g., `DJANGOCMS_MARKDOWN_EXTENSIONS = [..., "djangocms_katex.markdown"]`,
+and add the assets to your base template:
+
+```html
+{% load djangocms_katex_tags %}
+{% katex_assets %}
+```
+
+`{% katex_assets %}` adds the stylesheets and a small script to the sekizai blocks `css`
+and `js`. KaTeX itself is only loaded on pages containing formulae. The editor preview
+is not available in this case.
+
 ## Settings
 
-Both settings are optional.
+All settings are optional.
 
 ```python
 # KaTeX options applied to all formulae, see https://katex.org/docs/options
@@ -93,10 +139,14 @@ DJANGOCMS_KATEX_MACROS = {
     r"\RR": r"\mathbb{R}",
     r"\abs": r"\left|#1\right|",
 }
+
+# Formulae in djangocms-markdown content (default: True)
+DJANGOCMS_KATEX_MARKDOWN = False
 ```
 
-`displayMode` and `fleqn` are set by the plugin's style and cannot be overridden.
-The preview in the plugin form uses the same options and macros.
+For the plugin, `displayMode` and `fleqn` are set by its style and cannot be overridden.
+Display formulae in Markdown are centered unless `fleqn` is set in the options.
+The previews in the plugin form and in the Markdown editor use the same options and macros.
 
 ## Notes
 

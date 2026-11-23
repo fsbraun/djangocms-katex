@@ -12,3 +12,8 @@ def get_katex_options():
 def get_katex_macros():
     """Site-wide KaTeX macros, e.g. ``{"\\RR": "\\mathbb{R}"}``, available in all formulae."""
     return dict(getattr(settings, "DJANGOCMS_KATEX_MACROS", {}))
+
+
+def markdown_enabled():
+    """Whether djangocms-katex adds formula support ($...$) to djangocms-markdown, if installed."""
+    return bool(getattr(settings, "DJANGOCMS_KATEX_MARKDOWN", True))

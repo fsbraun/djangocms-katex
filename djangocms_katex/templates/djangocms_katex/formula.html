@@ -1,9 +1,2 @@
 {# templates/djangocms_katex/formula.html #}
-{% load sekizai_tags static %}<{{ tag_type }} data-katex-rendered="false" data-options="{{ options }}">{{ instance.katex }}</{{ tag_type }}>
-{% addtoblock "css" %}<link rel="stylesheet" href="{% static "djangocms_katex/vendor/katex/katex.min.css" %}">{% endaddtoblock %}
-{% addtoblock "css" %}<link rel="stylesheet" href="{% static "djangocms_katex/css/formula.css" %}">{% endaddtoblock %}
-{% addtoblock "js" %}<script defer src="{% static "djangocms_katex/vendor/katex/katex.min.js" %}"></script>{% endaddtoblock %}
-{% if chem_eq %}
-    {% addtoblock "js" %}<script defer src="{% static "djangocms_katex/vendor/katex/contrib/mhchem.min.js" %}"></script>{% endaddtoblock %}
-{% endif %}
-{% addtoblock "js" %}<script defer src="{% static "djangocms_katex/js/render.js" %}" data-djangocms-katex data-config="{{ katex_config }}"></script>{% endaddtoblock %}
+{% load djangocms_katex_tags %}<{{ tag_type }} data-katex-rendered="false" data-options="{{ options }}">{{ instance.katex }}</{{ tag_type }}>{% katex_assets chem=chem_eq %}
