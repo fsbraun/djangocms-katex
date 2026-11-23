@@ -28,8 +28,12 @@ from markdown import Extension
 from markdown.blockprocessors import BlockProcessor
 from markdown.inlinepatterns import InlineProcessor
 
-# Keep in sync with static/djangocms_katex/markdown/preview.js
-INLINE_RE = r"(?<![\\$])\$(?![\s$])((?:[^$\\]|\\.)+?)(?<!\s)\$(?![\d$])"
+# Keep in sync with static/djangocms_katex/markdown/preview.js. Formulae cannot contain blank
+# lines since markdown splits the text into blocks at blank lines first.
+FORMULA_RE = r"(?<![\\$])\$(?![\s$])(?P<formula>(?:[^$\\]|\\.)+?)(?<!\s)\$(?![\d$])"
+# Code spans are matched to skip them: Whatever starts first, code span or formula, wins.
+CODE_RE = r"(?<![\\`])(?P<ticks>`+)(?!`).+?(?<!`)(?P=ticks)(?!`)"
+INLINE_RE = f"{CODE_RE}|{FORMULA_RE}"
 DISPLAY_RE = re.compile(r"(?:^|\n)[ ]{0,3}\$\$(.+?)\$\$[ \t]*(?=\n|$)", re.DOTALL)
 
 
@@ -44,8 +48,10 @@ def formula_html(formula, display):
 
 class InlineFormulaProcessor(InlineProcessor):
     def handleMatch(self, m, data):
+        if m.group("formula") is None:
+            return None, None, None  # Code span: Left to markdown, continue searching behind it
         # Stashed as raw html: No other markdown rule touches the formula
-        return self.md.htmlStash.store(formula_html(m.group(1), display=False)), m.start(0), m.end(0)
+        return self.md.htmlStash.store(formula_html(m.group("formula"), display=False)), m.start(0), m.end(0)
 
 
 class DisplayFormulaProcessor(BlockProcessor):
@@ -70,8 +76,8 @@ class KaTexExtension(Extension):
     def extendMarkdown(self, md):
         if "$" not in md.ESCAPED_CHARS:
             md.ESCAPED_CHARS = [*md.ESCAPED_CHARS, "$"]  # \$ is a literal dollar sign
-        # After code spans (190) which take precedence, before backslash escapes (180)
-        md.inlinePatterns.register(InlineFormulaProcessor(INLINE_RE, md), "katex-inline", 185)
+        # Before code spans (190): Backticks within a formula are part of the formula
+        md.inlinePatterns.register(InlineFormulaProcessor(INLINE_RE, md), "katex-inline", 195)
         # Before indented code blocks (80) and all other block elements
         md.parser.blockprocessors.register(DisplayFormulaProcessor(md.parser), "katex-display", 85)
 

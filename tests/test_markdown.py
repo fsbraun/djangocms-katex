@@ -70,6 +70,22 @@ def test_code_is_not_touched():
     assert render("    $x$ and\n    $$y$$") == "<pre><code>$x$ and\n$$y$$\n</code></pre>"
 
 
+def test_backticks_within_formula():
+    assert render("$\\text{`code`}$ and `code`") == f"<p>{INLINE}\\text{{`code`}}</span> and <code>code</code></p>"
+
+
+def test_code_span_and_formula_whichever_starts_first():
+    assert render("`a $x$ b` and $y$") == f"<p><code>a $x$ b</code> and {INLINE}y</span></p>"
+    assert render("``a ` $x$`` and $y$") == f"<p><code>a ` $x$</code> and {INLINE}y</span></p>"
+    assert render("$a ` b$ and `$c$`") == f"<p>{INLINE}a ` b</span> and <code>$c$</code></p>"
+    assert render("\\`$x$\\`") == f"<p>`{INLINE}x</span>`</p>"
+
+
+def test_formulae_do_not_cross_blank_lines():
+    assert render("$$\na\n\nb\n$$") == "<p>$$\na</p>\n<p>b\n$$</p>"
+    assert render("$a\n\nb$") == "<p>$a</p>\n<p>b$</p>"
+
+
 def test_formulae_in_other_elements():
     html = render("# Head $x^2$\n\n- item $y$\n\n    $$\n    z_1\n    $$\n\n| a |\n|---|\n| $x_1$ |")
 
