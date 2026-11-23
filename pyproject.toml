@@ -1,6 +1,5 @@
 [build-system]
 build-backend = "hatchling.build"
-
 requires = [ "hatchling" ]
 
 [project]
@@ -42,13 +41,13 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
   "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
 ]
 dynamic = [ "version" ]
 dependencies = [
   "django-cms",
 ]
-
 optional-dependencies.static-ace = [
   "djangocms-static-ace",
 ]
@@ -58,13 +57,11 @@ optional-dependencies.test = [
 ]
 urls.Homepage = "https://github.com/fsbraun/djangocms-katex"
 
-[tool.hatch.build.targets.sdist]
-include = [
+[tool.hatch]
+version.path = "djangocms_katex/__init__.py"
+build.targets.sdist.include = [
   "/djangocms_katex",
 ]
-
-[tool.hatch.version]
-path = "djangocms_katex/__init__.py"
 
 [tool.black]
 exclude = [
@@ -77,6 +74,10 @@ exclude = [
   "build",
   "dist",
 ]
+
+[tool.djlint]
+profile = "django"
+ignore = "H023,T003,H006,H031,D018,H021,H025"
 
 [tool.ruff]
 line-length = 119
@@ -91,7 +92,6 @@ lint.select = [
   "I",
   "W",
 ]
-
 lint.ignore = [
   "E501", # line too long
   "E701", # multiple statements on one line (colon)
@@ -103,7 +103,3 @@ lint.ignore = [
 DJANGO_SETTINGS_MODULE = "tests.settings"
 pythonpath = [ "." ]
 testpaths = [ "tests" ]
-
-[tool.djlint]
-ignore = "H023,T003,H006,H031,D018,H021,H025"
-profile = "django"

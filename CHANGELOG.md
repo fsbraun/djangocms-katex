@@ -15,6 +15,11 @@
 * chore: Ace editor loaded from CDN updated to 1.45.2
 * chore: Added tests for Django 4.2 - 6.1 and django CMS 3.11 - 5.1
 
+1.0.2 (2026-03-20)
+==================
+
+* chore: Update katex to 0.16.40
+
 1.0.1 (2026-01-25)
 ==================
 
