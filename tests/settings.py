@@ -2,6 +2,7 @@
 #
 # Minimal django CMS project to test djangocms-katex
 
+from importlib.util import find_spec
 from pathlib import Path
 
 SECRET_KEY = "djangocms-katex-test"
@@ -22,6 +23,10 @@ INSTALLED_APPS = [
     "sekizai",
     "djangocms_katex",
 ]
+
+if find_spec("djangocms_markdown"):
+    # Optional: djangocms-katex adds formulae to djangocms-markdown
+    INSTALLED_APPS.append("djangocms_markdown")
 
 MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",

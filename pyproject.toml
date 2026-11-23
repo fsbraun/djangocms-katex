@@ -51,6 +51,7 @@ optional-dependencies.static-ace = [
   "djangocms-static-ace",
 ]
 optional-dependencies.test = [
+  "markdown",
   "pytest",
   "pytest-django",
 ]

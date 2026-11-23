@@ -2,14 +2,12 @@
 #
 
 import json
-import re
 
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
-from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
 
-from . import conf, forms, models
+from . import assets, forms, models
 
 
 @plugin_pool.register_plugin
@@ -55,15 +53,6 @@ class KaTexPlugin(CMSPluginBase):
                 "fleqn": instance.katex_display_style == 2,
             }
         )
-        # Page-wide configuration, read by render.js from its script tag
-        context["katex_config"] = json.dumps(
-            {
-                "katex": static("djangocms_katex/vendor/katex/katex.min.js"),
-                "mhchem": static("djangocms_katex/vendor/katex/contrib/mhchem.min.js"),
-                "options": conf.get_katex_options(),
-                "macros": conf.get_katex_macros(),
-            }
-        )
         context["tag_type"] = "div" if instance.katex_display_style else "span"
-        context["chem_eq"] = re.search(r"\\(ce|pu)\s*{", instance.katex)
+        context["chem_eq"] = bool(assets.CHEM_RE.search(instance.katex))
         return super().render(context, instance, placeholder)

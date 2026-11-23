@@ -7,6 +7,7 @@ import pytest
 from cms.plugin_pool import plugin_pool
 from django.contrib.staticfiles import finders
 from django.core.management import call_command
+from django.template import engines
 from django.template.loader import render_to_string
 
 from djangocms_katex.cms_plugins import KaTexPlugin
@@ -120,3 +121,23 @@ def test_no_missing_migrations():
         call_command("makemigrations", "djangocms_katex", check=True, dry_run=True, stdout=out)
     except SystemExit:
         pytest.fail(f"Missing migrations:\n{out.getvalue()}")
+
+
+def test_katex_assets_template_tag(rf):
+    template = engines["django"].from_string(
+        "{% load sekizai_tags djangocms_katex_tags %}{% render_block 'css' %}{% katex_assets %}{% katex_assets %}"
+        "{% render_block 'js' %}"
+    )
+    html = template.render({}, rf.get("/"))
+
+    assert html.count("djangocms_katex/vendor/katex/katex.min.css") == 1
+    assert html.count("djangocms_katex/css/formula.css") == 1
+    assert html.count('src="/static/djangocms_katex/js/render.js"') == 1
+    assert "mhchem" not in html.split("data-config")[0]
+    # Identical to the plugin's assets
+    plugin_html = re.sub(r"<div data-katex-rendered.*?</div>|</?(html|head|body)>", "", render_plugin(rf, "x"))
+    assert html.split() == plugin_html.split()
+
+
+def test_katex_assets_template_tag_without_sekizai():
+    assert engines["django"].from_string("{% load djangocms_katex_tags %}{% katex_assets %}").render({}) == ""

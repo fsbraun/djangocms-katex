@@ -6,6 +6,10 @@
   internal classes, update your selectors.
 * feat: Site-wide KaTeX options and macros with the new `DJANGOCMS_KATEX_OPTIONS` and
   `DJANGOCMS_KATEX_MACROS` settings. They also apply to the preview in the plugin form.
+* feat: Formulae in Markdown: With djangocms-markdown 1.1+ write `$...$` and `$$...$$`
+  in Markdown content, including a rendered editor preview. Can be switched off with
+  `DJANGOCMS_KATEX_MARKDOWN = False`.
+* feat: `{% katex_assets %}` template tag to add KaTeX's assets to a page
 * feat: Formulae do not flash their LaTeX source before being rendered anymore
 * feat: Wide formulae in display style scroll horizontally instead of overflowing the page
 * feat: `\pu{}` loads the mhchem extension, too
