@@ -1,31 +1,9 @@
 {# templates/djangocms_katex/formula.html #}
-{% load sekizai_tags static %}<{{ tag_type }} data-katex-rendered="false" data-options='{{ options }}'>{{ instance.katex }}</{{ tag_type }}>
+{% load sekizai_tags static %}<{{ tag_type }} data-katex-rendered="false" data-options="{{ options }}">{{ instance.katex }}</{{ tag_type }}>
 {% addtoblock "css" %}<link rel="stylesheet" href="{% static "djangocms_katex/vendor/katex/katex.min.css" %}">{% endaddtoblock %}
+{% addtoblock "css" %}<link rel="stylesheet" href="{% static "djangocms_katex/css/formula.css" %}">{% endaddtoblock %}
 {% addtoblock "js" %}<script defer src="{% static "djangocms_katex/vendor/katex/katex.min.js" %}"></script>{% endaddtoblock %}
 {% if chem_eq %}
     {% addtoblock "js" %}<script defer src="{% static "djangocms_katex/vendor/katex/contrib/mhchem.min.js" %}"></script>{% endaddtoblock %}
 {% endif %}
-{% addtoblock "js" %}
-  <script>
-      window.djangocms_katex_macros = window.djangocms_katex_macros || {};
-      (function () {
-        function render()
-        {
-          for (const element of document.querySelectorAll('[data-katex-rendered="false"]')) {
-              let options = JSON.parse(element.dataset.options);
-              options.macros = djangocms_katex_macros;  // Persistent macros on a page
-              try {
-                  katex.render(element.textContent, element, options);
-                  element.dataset.katexRendered = true;
-              } catch (e) {
-                  console.error(e);
-              }
-          };
-        };
-        document.addEventListener("DOMContentLoaded", render);
-        {% if request.toolbar %}
-            CMS.$(window).on('cms-content-refresh', render);
-        {% endif %}
-      })();
-  </script>
-{% endaddtoblock %}
+{% addtoblock "js" %}<script defer src="{% static "djangocms_katex/js/render.js" %}" data-djangocms-katex data-config="{{ katex_config }}"></script>{% endaddtoblock %}
