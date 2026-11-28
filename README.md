@@ -95,6 +95,8 @@ $$
   space nor be followed by a digit. Hence, "from $5 to $10" is not a formula.
 * **Display formulae** start with `$$` at the beginning of a line and end with `$$` at
   the end of a line. They can span several lines but cannot contain blank lines.
+  Alternatively, use LaTeX's `\[` and `\]` in the same way. Elsewhere in a line, `\[`
+  and `\]` remain Markdown's escaped brackets.
 * Use `\$` for a dollar sign if a text is mistaken for a formula.
 * Formulae in code spans and code blocks are left untouched.
 * Chemical equations, site-wide options and macros work as in the KaTeX plugin.

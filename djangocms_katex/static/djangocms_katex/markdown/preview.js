@@ -1,6 +1,6 @@
 // static/djangocms_katex/markdown/preview.js
 //
-// Preview processor for djangocms-markdown's editor: Renders formulae ($...$ and $$...$$)
+// Preview processor for djangocms-markdown's editor: Renders formulae ($...$, $$...$$, \[...\])
 // in the editor preview as djangocms_katex/markdown.py and render.js do on the page.
 //
 // Before the preview is rendered, formulae are replaced by tokens (plain text which markdown
@@ -31,7 +31,8 @@
     const pattern = new RegExp([
         '(?:^|\\n)[ ]{0,3}(`{3,}|~{3,})[^\\n]*\\n[\\s\\S]*?(?:\\n[ ]{0,3}\\1[`~]*[ \\t]*(?=\\n|$)|$)',  // Fenced code
         '(?<![\\\\`])(`+)(?!`)(?:' + no_blank_line + '[\\s\\S])+?(?<!`)\\2(?!`)',  // Code span
-        '(?:^|\\n)([ \\t]*)\\$\\$((?:' + no_blank_line + '[\\s\\S])+?)\\$\\$[ \\t]*(?=\\n|$)',  // Display formula
+        '(?:^|\\n)([ \\t]*)(?:\\$\\$((?:' + no_blank_line + '[\\s\\S])+?)\\$\\$' +  // Display formula: $$...$$
+            '|\\\\\\[((?:' + no_blank_line + '(?:[^\\\\]|\\\\[\\s\\S]))+?)\\\\\\])[ \\t]*(?=\\n|$)',  // or \[...\]
         '(?<![\\\\$])\\$(?![\\s$])((?:' + no_blank_line + '(?:[^$\\\\]|\\\\[\\s\\S]))+?)(?<!\\s)\\$(?![\\d$])'  // Inline
     ].join('|'), 'g');
 
@@ -42,7 +43,9 @@
 
     function before(text) {
         formulae = [];
-        return text.replace(pattern, function (match, fence, ticks, indent, display, inline) {
+        return text.replace(pattern, function (match, fence, ticks, indent, dollars, brackets, inline) {
+            const display = dollars !== undefined ? dollars : brackets;
+
             if (display !== undefined && display.trim()) {
                 const newline = match.startsWith('\n') ? '\n' : '';
                 const dedent = function (lines) {

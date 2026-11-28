@@ -1,3 +1,9 @@
+Unreleased
+==========
+
+* feat: Display formulae in Markdown can also be enclosed in `\[` and `\]`, in addition
+  to `$$`
+
 1.1.0 (2026-11-23)
 ==================
 

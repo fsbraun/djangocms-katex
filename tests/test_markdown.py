@@ -20,6 +20,21 @@ def test_display_formula():
     assert render("$$E = mc^2$$") == f"{DISPLAY}E = mc^2</div>"
 
 
+def test_display_formula_in_brackets():
+    assert render("\\[E = mc^2\\]") == f"{DISPLAY}E = mc^2</div>"
+    assert render("Before\n\\[\na &= b \\\\[1em]\n[c \\\\]\n\\]\nAfter") == (
+        f"<p>Before</p>\n{DISPLAY}a &amp;= b \\\\[1em]\n[c \\\\]</div>\n<p>After</p>"
+    )
+    assert render("- item\n\n    \\[\n    z_1\n    \\]") == f"<ul>\n<li>\n<p>item</p>\n{DISPLAY}z_1</div>\n</li>\n</ul>"
+
+
+def test_escaped_brackets_in_text():
+    assert render("an \\[escaped\\] bracket") == "<p>an [escaped] bracket</p>"
+    assert render("\\[not a link\\](url)") == "<p>[not a link](url)</p>"
+    assert render("\\[ \\]") == "<p>[ ]</p>"
+    assert render("    \\[x_1\\]") == "<pre><code>\\[x_1\\]\n</code></pre>"
+
+
 def test_multi_line_display_formula_within_paragraph():
     html = render("Before\n$$\n\\begin{aligned}\na &= b \\\\\nc &= d\n\\end{aligned}\n$$\nAfter *text*")
 

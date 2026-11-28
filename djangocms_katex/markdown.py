@@ -1,6 +1,6 @@
 # djangocms_katex/markdown.py
 #
-r"""Python-Markdown extension for formulae: ``$...$`` (inline) and ``$$...$$`` (display).
+r"""Python-Markdown extension for formulae: ``$...$`` (inline), ``$$...$$`` and ``\[...\]`` (display).
 
 Formulae are not rendered on the server. They are turned into the markup of the KaTeX
 plugin and are rendered in the browser by ``djangocms_katex/js/render.js`` (see the
@@ -9,8 +9,9 @@ plugin and are rendered in the browser by ``djangocms_katex/js/render.js`` (see 
 * Inline: ``$a^2 + b^2 = c^2$``. The opening ``$`` must not be followed by white space,
   the closing ``$`` neither be preceded by white space nor be followed by a digit. Hence,
   "from $5 to $10" is not a formula. ``\$`` is a literal dollar sign.
-* Display: ``$$`` at the beginning of a line up to ``$$`` at the end of a line. The
-  formula may span several lines but must not contain blank lines.
+* Display: ``$$`` at the beginning of a line up to ``$$`` at the end of a line, or
+  likewise ``\[`` up to ``\]``. The formula may span several lines but must not contain
+  blank lines. Elsewhere, ``\[`` and ``\]`` remain markdown's escaped brackets.
 
 With djangocms-markdown the extension is registered automatically (``cms_config.py``).
 To use it elsewhere add ``"djangocms_katex.markdown"`` to Python-Markdown's extensions.
@@ -34,7 +35,16 @@ FORMULA_RE = r"(?<![\\$])\$(?![\s$])(?P<formula>(?:[^$\\]|\\.)+?)(?<!\s)\$(?![\d
 # Code spans are matched to skip them: Whatever starts first, code span or formula, wins.
 CODE_RE = r"(?<![\\`])(?P<ticks>`+)(?!`).+?(?<!`)(?P=ticks)(?!`)"
 INLINE_RE = f"{CODE_RE}|{FORMULA_RE}"
-DISPLAY_RE = re.compile(r"(?:^|\n)[ ]{0,3}\$\$(.+?)\$\$[ \t]*(?=\n|$)", re.DOTALL)
+# Either $$...$$ or \[...\]. Within brackets a backslash always takes the next character:
+# "\\]" is a line break and a bracket and does not end the formula.
+DISPLAY_RE = re.compile(
+    r"(?:^|\n)[ ]{0,3}(?:\$\$(?P<dollars>.+?)\$\$|\\\[(?P<brackets>(?:[^\\]|\\.)+?)\\\])[ \t]*(?=\n|$)",
+    re.DOTALL,
+)
+
+
+def display_formula(match):
+    return (match.group("dollars") or match.group("brackets") or "").strip()
 
 
 def formula_html(formula, display):
@@ -57,7 +67,7 @@ class InlineFormulaProcessor(InlineProcessor):
 class DisplayFormulaProcessor(BlockProcessor):
     def test(self, parent, block):
         match = DISPLAY_RE.search(block)
-        return bool(match and match.group(1).strip())
+        return bool(match and display_formula(match))
 
     def run(self, parent, blocks):
         block = blocks.pop(0)
@@ -67,7 +77,7 @@ class DisplayFormulaProcessor(BlockProcessor):
             self.parser.parseBlocks(parent, [before])
         # A paragraph only containing stashed block-level html is replaced by that html
         paragraph = SubElement(parent, "p")
-        paragraph.text = self.parser.md.htmlStash.store(formula_html(match.group(1).strip(), display=True))
+        paragraph.text = self.parser.md.htmlStash.store(formula_html(display_formula(match), display=True))
         if after.strip():
             blocks.insert(0, after.lstrip("\n"))
 
